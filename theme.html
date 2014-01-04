@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{Title}{block:PostSummary} - {PostSummary}{/block:PostSummary}</title>
+		<link type="text/css" rel="stylesheet" href="http://static.tumblr.com/a0zngdy/D8tmukvq3/theme.css"/>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
+		<link rel="icon" type="image/x-icon" href="{Favicon}"/>
+		{block:Description}
+			<meta name="description" content="{MetaDescription}" />
+		{/block:Description}
+		<!-- Tumblr theme options -->
+		<meta name="text:LastFM Username" content=""/>
+		<meta name="text:LastFM API Key" content=""/>
+		<meta name="text:Twitter Username" content=""/>
+		<meta name="text:Twitter Widget ID" content=""/>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+		<script type="text/javascript" src="http://static.tumblr.com/a0zngdy/TYtmjl2hw/lastfm.js"></script>
+	</head>
+	<body{block:Permalink} class="permalink"{/block:Permalink}>
+		<div id="content">
+			{block:Posts}
+				<div class="post {PostType}{block:Date}{block:NewDayDate} newDay{/block:NewDayDate}{/block:Date}">
+					{block:Date}{block:NewDayDate}
+						<h4 class="date">{ShortMonth} {DayOfMonth}</h4>
+					{/block:NewDayDate}{/block:Date}
+					{block:Text}
+						{block:Title}
+						<h3><a href="{Permalink}">{Title}</a></h3>
+						{/block:Title}
+						{Body}
+					{/block:Text}
+					{block:Photo}
+						<img src="{PhotoURL-500}" alt="{PhotoAlt}"/>
+						{block:Caption}
+							<div class="caption">{Caption}</div>
+						{/block:Caption}
+					{/block:Photo}
+					{block:Panorama}
+						{LinkOpenTag}<img src="{PhotoURL-Panorama}" alt="{PhotoAlt}"/>{LinkCloseTag}
+						{block:Caption}
+							<div class="caption">{Caption}</div>
+						{/block:Caption}
+					{/block:Panorama}
+					{block:Photoset}
+						{Photoset-500}
+						{block:Caption}
+							<div class="caption">{Caption}</div>
+						{/block:Caption}
+					{/block:Photoset}
+					{block:Quote}
+						<p>{Quote}</p>
+						{block:Source}
+							<div class="source">{Source}</div>
+						{/block:Source}
+					{/block:Quote}
+					{block:Link}
+						<h3><a href="{URL}" class="link" {Target}>{Name}</a></h3>
+
+						{block:Description}
+							<div class="description">{Description}</div>
+						{/block:Description}
+					{/block:Link}
+					{block:Chat}
+						{block:Title}
+							<h3><a href="{Permalink}">{Title}</a></h3>
+						{/block:Title}
+						<ul class="chat">
+							{block:Lines}
+								<li class="{Alt} user_{UserNumber}">
+									{block:Label}
+									<span class="label">{Label}</span>
+									{/block:Label}
+									{Line}
+								</li>
+							{/block:Lines}
+						</ul>
+					{/block:Chat}
+					{block:Video}
+						{Video-500}
+
+						{block:Caption}
+							<div class="caption">{Caption}</div>
+						{/block:Caption}
+					{/block:Video}
+					{block:Audio}
+						{AudioPlayerBlack}
+
+						{block:Caption}
+							<div class="caption">{Caption}</div>
+						{/block:Caption}
+					{/block:Audio}
+
+					{block:Date}
+						<div class="metadata">
+							<a class="noteCount" href="{Permalink}" title="View post - {12Hour}:{Minutes}:{Seconds}{CapitalAmPm} {DayOfMonth} {Month} {Year}"><span>{NoteCountWithLabel}</span></a>
+							{block:RebloggedFrom}
+								<a href="{Permalink}" title="View post - {12Hour}:{Minutes}:{Seconds}{CapitalAmPm} {DayOfMonth} {Month} {Year}">Reblogged {TimeAgo}</a> from <a href="{ReblogParentURL}" title="{PlaintextReblogParentTitle}">{ReblogParentName}</a>{block:RebloggedFromReblog} (originally from <a href="{ReblogRootURL}" title="{PlaintextReblogRootTitle}">{ReblogRootName}</a>){/block:RebloggedFromReblog}
+							{/block:RebloggedFrom}
+							{block:NotReblog}
+								<a href="{Permalink}" title="View post - {12Hour}:{Minutes}:{Seconds}{CapitalAmPm} {DayOfMonth} {Month} {Year}">{lang:Posted TimeAgo}</a>{block:ContentSource} from <a href="{SourceURL}">{SourceTitle}</a>{/block:ContentSource}
+							{/block:NotReblog}
+							{block:HasTags}
+								<ul class="tags">
+									{block:Tags}
+										<li>
+											<a href="{TagURL}">#{Tag}</a>
+										</li>
+									{/block:Tags}
+								</ul>
+							{/block:HasTags}
+						</div>
+						{PostNotes}
+					{block:Date}
+				</div>
+			{/block:Posts}
+			{block:Pagination}
+			<ol class="navigation">
+				<li{block:PreviousPage} class="shown"{/block:PreviousPage}><a href="{block:PreviousPage}{PreviousPage}{/block:PreviousPage}">&laquo;</a></li>
+				<li{block:NextPage} class="shown"{/block:NextPage}><a href="{block:NextPage}{NextPage}{/block:NextPage}">&raquo;</a></li>
+			</ol>
+			{/block:Pagination}
+		</div>
+		<div id="leftnav">
+			<a href="/"><img alt="{Title}" src="{PortraitURL-128}" /></a>
+			<h1><a href="/">{Title}</a></h1>
+			{block:Description}
+				{Description}
+			{/block:Description}
+			<ul>
+				<li><a href="/archive">Archive</a></li>
+				<li><a href="{RSS}">RSS</a></li>
+				<li><a href="/random">Random post</a></li>
+				{block:AskEnabled}<li><a href="/ask">{AskLabel}</a></li>{/block:AskEnabled}
+			</ul>
+			{block:Pagination}
+			<ol class="navigation">
+				<li{block:PreviousPage} class="shown"{/block:PreviousPage}><a href="{block:PreviousPage}{PreviousPage}{/block:PreviousPage}">&laquo;</a></li>
+				<li{block:NextPage} class="shown"{/block:NextPage}><a href="{block:NextPage}{NextPage}{/block:NextPage}">&raquo;</a></li>
+			</ol>
+			{/block:Pagination}
+		</div>
+		<div id="rightnav">
+			<a class="twitter-timeline" href="https://twitter.com/{text:Twitter Username}" data-widget-id="{text:Twitter Widget ID}">Tweets by @{text:Twitter Username}</a>
+			<ul id="lastfmRecent">
+				<li class="head">
+					<a href="http://last.fm"><img src="http://cdn.last.fm/flatness/badges/lastfm_red_small.gif" alt="Last.FM" /></a>
+					<a href="http://last.fm/user/{text:LastFM Username}/tracks">Recently Listened Tracks</a>
+				</li>
+			</ul>
+			<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");loadTracks('{text:LastFM Username}','lastfmRecent','{text:LastFM API Key}');</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,459 @@
+// Colours
+$centreBackground: #fff;//  Centre column background colour 
+$sideBackground: #333;//  Left/right column background colour
+$sideForeground: #fff;
+$sideAHover: #9999ff;
+$centreAHover: #339;
+$imageBorder: #ccc;
+$foldedCornerBackground: $imageBorder;
+$tagsForeground: #666;
+$chatUser1: blue;
+$chatUser2: green;
+$chatUser3: red;
+$lastFMBorder: #666;
+$lastFMTime: #999;
+$lastFMArtist: $lastFMTime;
+$lastFMPlaceholder: #444;
+
+// Widths
+$minimumWidth: 1200px;
+$maximumWidth: 1500px;
+$pageWidth: 80%;
+$rightColWidth: 250px; //  Width of right column 
+$leftColWidth: 200px; //  Width of left column 
+$centreColWidth: 750px;
+$photosetWidth: 500px; // we use {Photoset-500} in the theme
+$lastFMCoverImageSize: 32px;
+$rainbowLineWidth: 8px;
+// Margins
+$topPadding: 15px;
+$centreColBottomPadding: 10px;
+$centreColSidePadding: 15px;
+$leftColSidePadding: $centreColSidePadding;
+$rightColSidePadding: $centreColSidePadding;
+$default-border-radius: 5px;
+$postMargin: 25px;
+$newDayMargin: 25px;
+
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+
+@mixin borderedImage() {
+	margin: auto;
+	display: block;
+	border: 10px solid $imageBorder;
+	@include border-radius();
+}
+
+@mixin cancelBorderedImage() {
+	margin: inherit;
+	display: inherit;
+	border: inherit;
+	@include border-radius(0);
+}
+
+html, body {
+	width: 100%;
+	min-width: $minimumWidth;
+}
+//  General styles 
+body {
+	margin: 0;
+	padding: 0;
+	border: 0;			//  This removes the border around the viewport in old versions of IE 
+	width: 100%;
+	position:relative;
+
+	background-color: $sideBackground;
+	min-width: $minimumWidth;   
+	font-size: 90%;
+
+	font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', Helvetiker, Verdana, sans-serif;
+}
+
+// Rainbow in the top-left
+body:before {
+	$rainbowHeight: $rainbowLineWidth * 7;
+	$rainbowBoxWidth: 2 * $rainbowHeight + 10px; // 10px margin of error to allow for browser rotation glitches
+	$boxCentre: $rainbowHeight / sqrt(2);
+	content: '';
+	position: fixed;
+	z-index: 1;
+	height: 0;
+	width: $rainbowBoxWidth;
+	top: $boxCentre;
+	left: $boxCentre - $rainbowBoxWidth / 2;
+	clip: rect(-$rainbowHeight, $rainbowBoxWidth, 0, 0);
+	@include box-shadow(
+		0px 0px 0px $rainbowLineWidth darkviolet,
+		0px 0px 0px $rainbowLineWidth*2 blue,
+		0px 0px 0px $rainbowLineWidth*3 turquoise,
+		0px 0px 0px $rainbowLineWidth*4 green,
+		0px 0px 0px $rainbowLineWidth*5 yellow,
+		0px 0px 0px $rainbowLineWidth*6 orange,
+		0px 0px 0px $rainbowLineWidth*7 red
+	);
+	@include rotate(-45deg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0;
+}
+
+#content {
+	width: $centreColWidth;
+	margin: 0 auto;
+	padding-top: $topPadding;
+
+ 	.post {
+		@include border-radius();
+
+		background-color: $centreBackground;
+		padding: $default-border-radius*2 $default-border-radius*3;
+		margin-top: $postMargin;
+		position: relative; // So dates can be repositioned
+		&:last-child {
+			margin-bottom: $postMargin;
+		}
+		word-wrap: break-word;
+		&.newDay {
+			margin-top: $postMargin + $newDayMargin;
+			&:first-child {
+				margin-top: $newDayMargin;
+			}
+		}
+
+		.date {
+			position: absolute;
+			top: -$newDayMargin;
+			left: 0px;
+			color: $sideForeground;
+		}
+
+		p {
+			margin-bottom: 0;
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+
+		blockquote {
+			background-image: url(http://static.tumblr.com/a0zngdy/X1fljkxgk/pipe.png);
+			background-repeat: repeat-y;
+			padding-left: 10px;
+			margin-left: 10px;
+
+			blockquote {
+				margin-right: 0px;
+			}
+
+			img {
+				max-width: $centreColWidth - 100px;
+			}
+		}
+
+		&.photo {
+			.html_photoset {
+				margin: 0 auto;
+				width: $photosetWidth;
+			}
+			img {
+				@include borderedImage();
+			}
+			blockquote img {
+				@include cancelBorderedImage();
+			}
+		}
+
+		&.quote {
+			p {
+				margin: 0;
+				font-size: 1.5em;
+
+				&:before {
+					content: "“";
+					float: left;
+					font-size: 2em;
+					margin-top: -0.2em;
+					margin-right: 0.1em;
+				}
+			}
+			.source {
+				margin-top: 10px;
+				font-style: italic;
+			}
+		}
+
+		&.chat {
+
+			ul {
+				margin: 0;
+				padding: 0;
+				list-style-type: none;
+				li {
+					margin: 0px 0px 1px 0px;
+				}
+			}
+			.label {
+				display: inline-block;
+				min-width: 80px;
+				text-align: right;
+				font-family: monospace;
+			}
+			.user_1 .label {
+				color: $chatUser1;
+			}
+			.user_2 .label {
+				color: $chatUser2;
+			}
+			.user_3 .label {
+				color: $chatUser3;
+			}
+		}
+
+		.caption {
+			margin-top: 0.5em;
+		}
+
+		a {
+			color: black;
+			&:hover, &.noteCount span:hover {
+				color: $centreAHover;
+			}
+		}
+
+		/* Folded-corner permalink. Using .noteCount makes it automatically disappear on permalink pages */
+		&:hover .noteCount:before {
+			content:"";
+
+			display:block;
+			width:0px;
+			height:0px;
+			position:absolute;
+			top:0px;
+			right:0px;
+			background: $foldedCornerBackground;
+			border-width: $default-border-radius * 2;
+			border-color: $sideBackground $sideBackground transparent transparent;
+			border-style: solid;
+
+			@include border-bottom-left-radius();
+		}
+
+		/* Cancel out the link-hover styles for .noteCount unless we're hovering over the actual link
+		   (so hovering over the corner doesn't highlight the notes) */
+		.noteCount:hover {
+			color: black;
+			span {
+				// needed to make the underline change color...
+				text-decoration: underline;
+			}
+		}
+
+		.metadata, .notes {
+			border-top: 1px solid $sideBackground;
+			margin-top: 0.5em;
+			margin-bottom: -$default-border-radius;
+			padding: 0.2em 0.5em;
+		}
+
+		.metadata {
+			.noteCount {
+				float: right;
+				margin: 0 0 0 10px;
+			}
+			ul.tags {
+				list-style-type: none;
+				padding: 0;
+				margin: 0.4em 0 0 0;
+				@include clearfix();
+
+				li {
+					float: left;
+					margin: 0 0.5em 0 0;
+					a {
+						color: $tagsForeground;
+						text-decoration: none;
+						&:hover {
+							color: inherit;
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+
+		.notes {
+			list-style: none;
+
+			img {
+				@include cancelBorderedImage();
+			}
+
+			li {
+				margin: 0;
+				padding: 3px 0;
+			}
+		}
+	}
+
+	ol.navigation {
+		$olWidth: $centreColWidth - 50px;
+		width: $olWidth;
+		li {
+			margin-left: $olWidth / 3 - 10px;
+		}
+	}
+}
+
+.permalink .metadata .noteCount {
+	display: none;
+}
+
+ol.navigation {
+	list-style-type: none;
+	padding: 0;
+	margin: 2em auto;
+	@include clearfix();
+
+	li {
+		float: left;
+		font-size: 3em;
+		visibility: hidden;
+		&.shown {
+			visibility: visible;
+		}
+		a {
+			text-decoration: none;
+		}
+	}
+}
+
+#leftnav, #rightnav, ol.navigation {
+	a {
+		color: $sideForeground;
+		&:hover {
+			color: $sideAHover;
+		}
+	}
+}
+
+#leftnav, #rightnav {
+	position: absolute;
+	top: $topPadding;
+	color: $sideForeground;
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+}
+
+#leftnav {
+	right: 50%;
+	$mr: $centreColWidth / 2 + $centreColSidePadding + $leftColSidePadding;
+	margin-right: $mr;
+	max-width: $maximumWidth / 2 - $mr;
+	padding-left: $leftColSidePadding;
+
+	h1, h2, h3, h4, h5, h6 {
+		a {
+			text-decoration: none;
+		}
+	}
+
+	img {
+		@include borderedImage();
+		margin-bottom: $default-border-radius;
+	}
+
+	ul li {
+		margin: 5px 0;
+		&:before {
+			content: "»";
+			margin: 0 10px;
+		}
+	}
+
+	ol.navigation {
+		$olWidth: $minimumWidth / 2 - $mr;
+		width: $olWidth;
+		li {
+			margin: 0 $olWidth / 6;
+		}
+	}
+}
+
+#rightnav {
+	left: 50%;
+	$ml: $centreColWidth / 2 + $centreColSidePadding + $rightColSidePadding;
+	margin-left: $ml;
+	max-width: $maximumWidth / 2 - $ml;
+	padding-right: $rightColSidePadding;
+
+	#twitter-widget-0 {
+		width: 100%;
+	}
+
+	ul {
+		margin: 10px 0;
+		li {
+			border: 1px solid $lastFMBorder;
+			margin-bottom: -1px;
+			padding: 5px 5px 5px 5px*2 + $lastFMCoverImageSize;
+			position: relative;
+			min-height: $lastFMCoverImageSize;
+			@include clearfix();
+
+			a {
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			&.head {
+				font-weight: bold;
+				padding: 10px;
+				min-height: inherit;
+				@include border-top-radius();
+
+				img {
+					float: right;
+					height: 1.2em;
+				}
+			}
+			&:last-child {
+				@include border-bottom-radius();
+			}
+
+			.cover {
+				position: absolute;
+				top: 5px;
+				left: 5px;
+				.placeholder {
+					background-color: $lastFMPlaceholder;
+				}
+				img, .placeholder {
+					vertical-align: top;
+					height: $lastFMCoverImageSize;
+					width: $lastFMCoverImageSize;
+				}
+			}
+			.time {
+				float: right;
+				margin: 0 0 5px 5px;
+				color: $lastFMTime;
+			}
+			.nowPlaying {
+				font-style: italic;
+			}
+			.artist {
+				display: block;
+				font-style: italic;
+				color: $lastFMArtist;
+			}
+		}
+	}
+}
