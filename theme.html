@@ -15,6 +15,9 @@
 		<meta name="text:Twitter Widget ID" content=""/>
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
 		<script type="text/javascript" src="http://static.tumblr.com/a0zngdy/TYtmjl2hw/lastfm.js"></script>
+		{block:IfTwitterUsername}{block:IfTwitterWidgetID}
+			<script type="text/javascript" src="//platform.twitter.com/widgets.js" id="twitter-wjs"></script>
+		{/block:IfTwitterWidgetID}{/block:IfTwitterUsername}
 	</head>
 	<body{block:Permalink} class="permalink"{/block:Permalink}>
 		<div id="content">
@@ -140,14 +143,18 @@
 			{/block:Pagination}
 		</div>
 		<div id="rightnav">
-			<a class="twitter-timeline" href="https://twitter.com/{text:Twitter Username}" data-widget-id="{text:Twitter Widget ID}">Tweets by @{text:Twitter Username}</a>
-			<ul id="lastfmRecent">
-				<li class="head">
-					<a href="http://last.fm"><img src="http://cdn.last.fm/flatness/badges/lastfm_red_small.gif" alt="Last.FM" /></a>
-					<a href="http://last.fm/user/{text:LastFM Username}/tracks">Recently Listened Tracks</a>
-				</li>
-			</ul>
-			<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");loadTracks('{text:LastFM Username}','lastfmRecent','{text:LastFM API Key}');</script>
+			{block:IfTwitterUsername}{block:IfTwitterWidgetID}
+				<a class="twitter-timeline" href="https://twitter.com/{text:Twitter Username}" data-widget-id="{text:Twitter Widget ID}">Tweets by @{text:Twitter Username}</a>
+			{/block:IfTwitterWidgetID}{/block:IfTwitterUsername}
+			{block:IfLastFMUsername}{block:IfLastFMAPIKey}
+				<ul id="lastfmRecent">
+					<li class="head">
+						<a href="http://last.fm"><img src="http://cdn.last.fm/flatness/badges/lastfm_red_small.gif" alt="Last.FM" /></a>
+						<a href="http://last.fm/user/{text:LastFM Username}/tracks">Recently Listened Tracks</a>
+					</li>
+				</ul>
+				<script type="text/javascript">loadTracks('{text:LastFM Username}','lastfmRecent','{text:LastFM API Key}');</script>
+			{/block:IfLastFMAPIKey}{/block:IfLastFMUsername}
 		</div>
 	</body>
 </html>
